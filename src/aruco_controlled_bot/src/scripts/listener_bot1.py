@@ -4,7 +4,7 @@ import rospy
 from aruco_controlled_bot.msg import MarkerPosition
 
 def callback(data):
-    rospy.loginfo("Received marker position: roll={}, pitch={}, yaw={}".format(data.roll, data.pitch, data.yaw))
+    rospy.loginfo("Received marker position: x={}, y={}, z={}".format(data.x, data.y, data.z))
 
 def listener():
     rospy.init_node('listener_bot', anonymous=True)

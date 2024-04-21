@@ -8,14 +8,14 @@ import struct
 
 
 class MarkerPosition(genpy.Message):
-  _md5sum = "4a842b65f413084dc2b10fb484ea7f17"
+  _md5sum = "eeec8b25a660789a89540dedcb2b06d6"
   _type = "aruco_controlled_bot/MarkerPosition"
   _has_header = False  # flag to mark the presence of a Header object
-  _full_text = """float64 x
-float64 y
-float64 z
+  _full_text = """float64 roll
+float64 pitch
+float64 yaw
 """
-  __slots__ = ['x','y','z']
+  __slots__ = ['roll','pitch','yaw']
   _slot_types = ['float64','float64','float64']
 
   def __init__(self, *args, **kwds):
@@ -26,7 +26,7 @@ float64 z
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       x,y,z
+       roll,pitch,yaw
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -35,16 +35,16 @@ float64 z
     if args or kwds:
       super(MarkerPosition, self).__init__(*args, **kwds)
       # message fields cannot be None, assign default values for those that are
-      if self.x is None:
-        self.x = 0.
-      if self.y is None:
-        self.y = 0.
-      if self.z is None:
-        self.z = 0.
+      if self.roll is None:
+        self.roll = 0.
+      if self.pitch is None:
+        self.pitch = 0.
+      if self.yaw is None:
+        self.yaw = 0.
     else:
-      self.x = 0.
-      self.y = 0.
-      self.z = 0.
+      self.roll = 0.
+      self.pitch = 0.
+      self.yaw = 0.
 
   def _get_types(self):
     """
@@ -59,7 +59,7 @@ float64 z
     """
     try:
       _x = self
-      buff.write(_get_struct_3d().pack(_x.x, _x.y, _x.z))
+      buff.write(_get_struct_3d().pack(_x.roll, _x.pitch, _x.yaw))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -75,7 +75,7 @@ float64 z
       _x = self
       start = end
       end += 24
-      (_x.x, _x.y, _x.z,) = _get_struct_3d().unpack(str[start:end])
+      (_x.roll, _x.pitch, _x.yaw,) = _get_struct_3d().unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill
@@ -89,7 +89,7 @@ float64 z
     """
     try:
       _x = self
-      buff.write(_get_struct_3d().pack(_x.x, _x.y, _x.z))
+      buff.write(_get_struct_3d().pack(_x.roll, _x.pitch, _x.yaw))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -106,7 +106,7 @@ float64 z
       _x = self
       start = end
       end += 24
-      (_x.x, _x.y, _x.z,) = _get_struct_3d().unpack(str[start:end])
+      (_x.roll, _x.pitch, _x.yaw,) = _get_struct_3d().unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill
