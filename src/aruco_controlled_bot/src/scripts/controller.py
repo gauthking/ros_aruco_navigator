@@ -35,7 +35,7 @@ def talker(frame):
     pub = rospy.Publisher('marker_position', MarkerPosition, queue_size=10)
     rate = rospy.Rate(10)  # 10hz
 
-    calib_data_path = "/home/vanderwaal/ros_proj/src/aruco_controlled_bot/src/scripts/calib_data/MultiMatrix.npz"
+    calib_data_path = "./src/aruco_controlled_bot/src/scripts/calib_data/MultiMatrix.npz"
     calib_data = np.load(calib_data_path)
     cam_mat = calib_data["camMatrix"]
     dist_coef = calib_data["distCoef"]
@@ -56,26 +56,26 @@ def talker(frame):
         rVec, tVec, _ = aruco.estimatePoseSingleMarkers(
             marker_corners, MARKER_SIZE, cam_mat, dist_coef
         )
-        for ids, rvec, tvec, corners in zip(marker_IDs, rVec, tVec, marker_corners):
+        total_markers = range(0, marker_IDs.size)
+        for ids, rvec, tvec, i in zip(marker_IDs, rVec, tVec, total_markers):
+            distance = np.sqrt(
+                tVec[i][0][2] ** 2 + tVec[i][0][0] ** 2 + tVec[i][0][1] ** 2
+            )
             # Convert rotation vector to rotation matrix
             rot_mat, _ = cv.Rodrigues(rvec)
-
             # Extract Euler angles from rotation matrix
             roll, pitch, yaw = cv.RQDecomp3x3(rot_mat)[0]
-
-            # Calculate marker centroid
-            centroid = np.mean(corners.squeeze(), axis=0)
-
-            # Publish marker position and orientation
             marker_position = MarkerPosition()
-            #marker_position.x = centroid[0]
-            #marker_position.y = centroid[1]
-            #marker_position.z = tvec[0][2]  # Distance along Z-axis
-            marker_position.roll= np.degrees(roll)
-            marker_position.pitch = np.degrees(pitch)
-            marker_position.yaw = np.degrees(yaw)
-            pub.publish(marker_position)
-            rospy.loginfo("Published marker position and orientation: {}".format(marker_position))
+            for corners in marker_corners:
+                centroid = np.mean(corners.squeeze(), axis=0)
+                marker_position.x = centroid[0]
+                marker_position.y = centroid[1]
+                marker_position.z = distance 
+                marker_position.roll= np.degrees(roll)
+                marker_position.pitch = np.degrees(pitch)
+                marker_position.yaw = np.degrees(yaw)
+                pub.publish(marker_position)
+                rospy.loginfo("Published marker position: {}".format(marker_position))
 
     rate.sleep()
 
