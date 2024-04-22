@@ -24,18 +24,33 @@ struct MarkerPosition_
   typedef MarkerPosition_<ContainerAllocator> Type;
 
   MarkerPosition_()
-    : roll(0.0)
+    : x(0.0)
+    , y(0.0)
+    , z(0.0)
+    , roll(0.0)
     , pitch(0.0)
     , yaw(0.0)  {
     }
   MarkerPosition_(const ContainerAllocator& _alloc)
-    : roll(0.0)
+    : x(0.0)
+    , y(0.0)
+    , z(0.0)
+    , roll(0.0)
     , pitch(0.0)
     , yaw(0.0)  {
   (void)_alloc;
     }
 
 
+
+   typedef double _x_type;
+  _x_type x;
+
+   typedef double _y_type;
+  _y_type y;
+
+   typedef double _z_type;
+  _z_type z;
 
    typedef double _roll_type;
   _roll_type roll;
@@ -75,7 +90,10 @@ return s;
 template<typename ContainerAllocator1, typename ContainerAllocator2>
 bool operator==(const ::aruco_controlled_bot::MarkerPosition_<ContainerAllocator1> & lhs, const ::aruco_controlled_bot::MarkerPosition_<ContainerAllocator2> & rhs)
 {
-  return lhs.roll == rhs.roll &&
+  return lhs.x == rhs.x &&
+    lhs.y == rhs.y &&
+    lhs.z == rhs.z &&
+    lhs.roll == rhs.roll &&
     lhs.pitch == rhs.pitch &&
     lhs.yaw == rhs.yaw;
 }
@@ -134,12 +152,12 @@ struct MD5Sum< ::aruco_controlled_bot::MarkerPosition_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "eeec8b25a660789a89540dedcb2b06d6";
+    return "1a83f0bdabe750ce0cfb45a14ec63457";
   }
 
   static const char* value(const ::aruco_controlled_bot::MarkerPosition_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0xeeec8b25a660789aULL;
-  static const uint64_t static_value2 = 0x89540dedcb2b06d6ULL;
+  static const uint64_t static_value1 = 0x1a83f0bdabe750ceULL;
+  static const uint64_t static_value2 = 0x0cfb45a14ec63457ULL;
 };
 
 template<class ContainerAllocator>
@@ -158,7 +176,10 @@ struct Definition< ::aruco_controlled_bot::MarkerPosition_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "float64 roll\n"
+    return "float64 x\n"
+"float64 y\n"
+"float64 z\n"
+"float64 roll\n"
 "float64 pitch\n"
 "float64 yaw\n"
 ;
@@ -179,6 +200,9 @@ namespace serialization
   {
     template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
     {
+      stream.next(m.x);
+      stream.next(m.y);
+      stream.next(m.z);
       stream.next(m.roll);
       stream.next(m.pitch);
       stream.next(m.yaw);
@@ -200,6 +224,12 @@ struct Printer< ::aruco_controlled_bot::MarkerPosition_<ContainerAllocator> >
 {
   template<typename Stream> static void stream(Stream& s, const std::string& indent, const ::aruco_controlled_bot::MarkerPosition_<ContainerAllocator>& v)
   {
+    s << indent << "x: ";
+    Printer<double>::stream(s, indent + "  ", v.x);
+    s << indent << "y: ";
+    Printer<double>::stream(s, indent + "  ", v.y);
+    s << indent << "z: ";
+    Printer<double>::stream(s, indent + "  ", v.z);
     s << indent << "roll: ";
     Printer<double>::stream(s, indent + "  ", v.roll);
     s << indent << "pitch: ";

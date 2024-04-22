@@ -18,11 +18,32 @@ class MarkerPosition {
   constructor(initObj={}) {
     if (initObj === null) {
       // initObj === null is a special case for deserialization where we don't initialize fields
+      this.x = null;
+      this.y = null;
+      this.z = null;
       this.roll = null;
       this.pitch = null;
       this.yaw = null;
     }
     else {
+      if (initObj.hasOwnProperty('x')) {
+        this.x = initObj.x
+      }
+      else {
+        this.x = 0.0;
+      }
+      if (initObj.hasOwnProperty('y')) {
+        this.y = initObj.y
+      }
+      else {
+        this.y = 0.0;
+      }
+      if (initObj.hasOwnProperty('z')) {
+        this.z = initObj.z
+      }
+      else {
+        this.z = 0.0;
+      }
       if (initObj.hasOwnProperty('roll')) {
         this.roll = initObj.roll
       }
@@ -46,6 +67,12 @@ class MarkerPosition {
 
   static serialize(obj, buffer, bufferOffset) {
     // Serializes a message object of type MarkerPosition
+    // Serialize message field [x]
+    bufferOffset = _serializer.float64(obj.x, buffer, bufferOffset);
+    // Serialize message field [y]
+    bufferOffset = _serializer.float64(obj.y, buffer, bufferOffset);
+    // Serialize message field [z]
+    bufferOffset = _serializer.float64(obj.z, buffer, bufferOffset);
     // Serialize message field [roll]
     bufferOffset = _serializer.float64(obj.roll, buffer, bufferOffset);
     // Serialize message field [pitch]
@@ -59,6 +86,12 @@ class MarkerPosition {
     //deserializes a message object of type MarkerPosition
     let len;
     let data = new MarkerPosition(null);
+    // Deserialize message field [x]
+    data.x = _deserializer.float64(buffer, bufferOffset);
+    // Deserialize message field [y]
+    data.y = _deserializer.float64(buffer, bufferOffset);
+    // Deserialize message field [z]
+    data.z = _deserializer.float64(buffer, bufferOffset);
     // Deserialize message field [roll]
     data.roll = _deserializer.float64(buffer, bufferOffset);
     // Deserialize message field [pitch]
@@ -69,7 +102,7 @@ class MarkerPosition {
   }
 
   static getMessageSize(object) {
-    return 24;
+    return 48;
   }
 
   static datatype() {
@@ -79,12 +112,15 @@ class MarkerPosition {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return 'eeec8b25a660789a89540dedcb2b06d6';
+    return '1a83f0bdabe750ce0cfb45a14ec63457';
   }
 
   static messageDefinition() {
     // Returns full string definition for message
     return `
+    float64 x
+    float64 y
+    float64 z
     float64 roll
     float64 pitch
     float64 yaw
@@ -98,6 +134,27 @@ class MarkerPosition {
       msg = {};
     }
     const resolved = new MarkerPosition(null);
+    if (msg.x !== undefined) {
+      resolved.x = msg.x;
+    }
+    else {
+      resolved.x = 0.0
+    }
+
+    if (msg.y !== undefined) {
+      resolved.y = msg.y;
+    }
+    else {
+      resolved.y = 0.0
+    }
+
+    if (msg.z !== undefined) {
+      resolved.z = msg.z;
+    }
+    else {
+      resolved.z = 0.0
+    }
+
     if (msg.roll !== undefined) {
       resolved.roll = msg.roll;
     }

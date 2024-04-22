@@ -68,10 +68,12 @@ def talker(frame):
             marker_position = MarkerPosition()
             for corners in marker_corners:
                 centroid = np.mean(corners.squeeze(), axis=0)
+
                 marker_position.x = centroid[0]
                 marker_position.y = centroid[1]
                 marker_position.z = distance 
-                marker_position.roll= np.degrees(roll)
+                #passing orientation values too
+                marker_position.roll= np.degrees(roll) 
                 marker_position.pitch = np.degrees(pitch)
                 marker_position.yaw = np.degrees(yaw)
                 pub.publish(marker_position)
