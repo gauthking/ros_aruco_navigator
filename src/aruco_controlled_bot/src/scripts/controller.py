@@ -18,9 +18,8 @@ def display_camera_feed():
         if not ret:
             print("Error: Unable to capture frame")
             break
-
         cv.imshow('Camera Feed', frame)
-
+        
         key = cv.waitKey(1)
         if key == ord('q'):
             break

@@ -11,6 +11,8 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
   rospy
   std_msgs
+  geometry_msgs
+  turtlebot3_gazebo
 )
 
 ## System dependencies are found with CMake's conventions

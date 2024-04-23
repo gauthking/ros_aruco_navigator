@@ -60,13 +60,19 @@ def talker(frame):
             distance = np.sqrt(
                 tVec[i][0][2] ** 2 + tVec[i][0][0] ** 2 + tVec[i][0][1] ** 2
             )
-
+            # Convert rotation vector to rotation matrix
+            rot_mat, _ = cv.Rodrigues(rvec)
+            # Extract Euler angles from rotation matrix
+            roll, pitch, yaw = cv.RQDecomp3x3(rot_mat)[0]
             marker_position = MarkerPosition()
             for corners in marker_corners:
                 centroid = np.mean(corners.squeeze(), axis=0)
                 marker_position.x = centroid[0]
                 marker_position.y = centroid[1]
                 marker_position.z = distance 
+                marker_position.roll= np.degrees(roll)
+                marker_position.pitch = np.degrees(pitch)
+                marker_position.yaw = np.degrees(yaw)
                 pub.publish(marker_position)
                 rospy.loginfo("Published marker position: {}".format(marker_position))
 
